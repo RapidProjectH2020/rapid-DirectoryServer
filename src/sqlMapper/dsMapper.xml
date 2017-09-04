@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DS">
+	<select id="vmmInfoList" resultType="eu.rapid.ds.VmmInfo">
+	     select * from vmm_info
+	</select>
+
+	<select id="vmmInfoListByLowUtil" resultType="eu.rapid.ds.VmmInfo">
+	     select * from vmm_info order by freecpu asc
+	</select>
+
+	<select id="getVmmInfo" parameterType="long" resultType="eu.rapid.ds.VmmInfo">
+	     select * from vmm_info where vmmid = #{vmmid}  
+	</select>
+
+	<select id="getVmmInfoByIp" parameterType="String" resultType="eu.rapid.ds.VmmInfo">
+	     select * from vmm_info where ipv4 = #{ipv4}  
+	</select>
+
+	<insert id="insertVmmInfo" parameterType="eu.rapid.ds.VmmInfo" useGeneratedKeys="true" keyProperty="vmmid" keyColumn="vmmid">
+	    insert into vmm_info 
+	     	(ipv4, mactype, freecpu, cpunums, freemem, freegpu, gpunums, availtypes, timestamp) 
+     	values 
+     		(#{ipv4}, #{mactype}, #{freecpu}, #{cpunums}, #{freemem}, #{freegpu}, #{gpunums}, #{availtypes}, now())
+
+			<selectKey keyProperty="vmmid" resultType="long" order="AFTER">
+	        	select LAST_INSERT_ID();
+	        </selectKey>
+	</insert>
+
+	<update id="updateVmmInfo" parameterType="eu.rapid.ds.VmmInfo">
+		update vmm_info set 
+			ipv4 = #{ipv4}, mactype = #{mactype}, freecpu = #{freecpu}, cpunums = #{cpunums}, freemem = #{freemem}, freegpu = #{freegpu}, gpunums = #{gpunums}, availtypes = #{availtypes}, timestamp = now()
+        where vmmid = #{vmmid}
+
+	</update>
+
+	<delete id="deleteVmmInfo" parameterType="long">
+	     delete from vmm_info where  vmmid = #{vmmid}
+	</delete>
+
+	<select id="userInfoList" resultType="eu.rapid.ds.UserInfo">
+	     select * from user_info
+	</select>
+
+	<select id="getUserInfo" parameterType="long" resultType="eu.rapid.ds.UserInfo">
+	     select * from user_info where userid = #{userid}  
+	</select>
+
+	<insert id="insertUserInfo" parameterType="eu.rapid.ds.UserInfo" useGeneratedKeys="true" keyProperty="userid" keyColumn="userid">
+	    insert into user_info 
+	     	(ipv4, qosparam, timestamp) 
+     	values 
+     		(#{ipv4}, #{qosparam}, now())
+
+			<selectKey keyProperty="userid" resultType="long" order="AFTER">
+	        	select LAST_INSERT_ID();
+	        </selectKey>
+	</insert>
+
+	<update id="updateUserInfo" parameterType="eu.rapid.ds.UserInfo">
+		update user_info set 
+			ipv4 = #{ipv4}, qosparam = #{qosparam}, timestamp = now()
+        where userid = #{userid}
+
+	</update>
+
+	<delete id="deleteUserInfo" parameterType="long">
+	     delete from user_info where  userid = #{userid}
+	</delete>
+
+	<select id="vmInfoList" resultType="eu.rapid.ds.VmInfo">
+	     select * from vm_info
+	</select>
+
+	<select id="helperVmInfoListByVmmid" parameterType="long" resultType="eu.rapid.ds.VmInfo">
+	     select * from vm_info where vmmid = #{vmmid} and category = 1
+	</select>
+
+	<select id="getVmInfo" parameterType="long" resultType="eu.rapid.ds.VmInfo">
+	     select * from vm_info where vmid = #{vmid}  
+	</select>
+
+	<select id="getVmInfoByuserid" parameterType="long" resultType="eu.rapid.ds.VmInfo">
+	     select * from vm_info where userid = #{userid}  
+	</select>
+
+	<insert id="insertVmInfo" parameterType="eu.rapid.ds.VmInfo" useGeneratedKeys="true" keyProperty="vmid" keyColumn="vmid">
+	    insert into vm_info 
+	     	(ipv4, vmmid, category, type, userid, offloadstatus, vmstatus, timestamp) 
+     	values 
+     		(#{ipv4}, #{vmmid}, #{category}, #{type}, #{userid}, #{offloadstatus}, #{vmstatus}, now())
+
+			<selectKey keyProperty="vmid" resultType="long" order="AFTER">
+	        	select LAST_INSERT_ID();
+	        </selectKey>
+	</insert>
+
+	<update id="updateVmInfo" parameterType="eu.rapid.ds.VmInfo">
+		update vm_info set 
+			ipv4 = #{ipv4}, vmmid = #{vmmid}, category = #{category}, type = #{type}, userid = #{userid}, offloadstatus = #{offloadstatus}, vmstatus = #{vmstatus}, timestamp = now()
+        where vmid = #{vmid}
+
+	</update>
+
+	<delete id="deleteVmInfo" parameterType="long">
+	     delete from vm_info where  vmid = #{vmid}
+	</delete>
+</mapper>
+
+
+

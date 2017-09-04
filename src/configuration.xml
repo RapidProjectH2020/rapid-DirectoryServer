@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RAPID_VMM_DS>
+	<description>RAPID DS Configuration</description>
+		<DS>
+			<vmmPort>9000</vmmPort>
+			<dsPort>9001</dsPort>
+			<dsMaxConnection>100</dsMaxConnection>
+			<dsIpAddress>127.0.0.1</dsIpAddress>
+		</DS>
+</RAPID_VMM_DS>
